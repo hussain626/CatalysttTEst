@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catylastt</title>
+    <link rel="stylesheet" href="style.css">
+    
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+</head>
+<body id="divToExport">
+    <!--Code Start-->
+
+    <h1 style="font-weight: lighter; padding: 52px;">Create a Invoice </h1>
+    <hr>
+
+    <div class="company-details" style="padding: 34px;">
+        <input type="text" name="" id="" style="padding: 8px ; width:30%;" placeholder="Company Name">
+        
+        <input type="file" name="" id="" style="border: radius 50%; text-align:center;padding: 8px; width: 20%; height: 100px; float: right; border:2px solid black; ">
+    </div>
+    <hr>
+    <div class="fromopt" style="padding: 34px; margin-left: 8%;float: left; width: 40%;">
+        <h2 style="font-weight: bold;">From : </h2>
+        <br><br>
+        <input type="text" style="padding: 8px ; width:40%;" placeholder="Name" required>
+
+        <br><br>
+        <input type="text" style="padding: 8px ; width:40%;" placeholder="Email" required>
+
+        <br><br>
+        <input type="text" style="padding: 8px ; width:40%;" placeholder="Address" required>
+
+        
+        <br><br>
+        <input type="text" style="padding: 8px ; width:40%;" placeholder="Phone" required>
+
+        
+        <br><br>
+        <input type="text" style="padding: 8px ; width:40%;" placeholder="Busniess Number" required>
+    </div>
+
+    <div class="toopt" style="   float: right; width:45% ">
+        <h2 style="font-weight: bold;">To : </h2>
+        <br><br>
+        <input type="text" style="padding: 8px ; width: 38%; " placeholder="Name" required>
+
+        <br><br>
+        <input type="text" style="padding: 8px ; width: 38%;" placeholder="Email" required>
+
+        <br><br>
+        <input type="text" style="padding: 8px ; width: 38%;" placeholder="Address" required>
+
+        
+        <br><br>
+        <input type="text" style="padding: 8px ; width: 38%;" placeholder="Phone" required>
+
+        
+        <br><br>
+        <input type="text" style="padding: 8px ; width:38%;" placeholder="Busniess Number" required>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <hr>
+    <br>
+    <div class="numbers">
+        &nbsp;&nbsp;&nbsp;<div class="gen" id="number" contenteditable="true" style="margin-left:8%; border: 2px solid black; padding: 8px; width: 26%; float: left;"></div>
+        &nbsp;&nbsp;&nbsp;<div class="gen" contenteditable="true" style="margin-right:8%; border: 2px solid black; padding: 8px; width: 26%; float: right;">Date</div>
+    </div>  
+    <br><br>
+    <br>
+    <hr><br><br>
+    
+    <section style="width: 100%;">
+        <center>
+        <table id="datas">
+            <tr>
+                <th>Description</th>
+                <th>Rates</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Tax</th>
+
+            </tr>
+            <tr>
+                <td><input type="text" placeholder="Item description"></td>
+                <td><input type="number" placeholder="0.00"></td>
+                <td><input type="number" placeholder="1"></td>
+                <td><input type="number" placeholder="Pkr 100"></td>
+<td><input type="checkbox">
+            </tr>
+            <tr>
+                <td><textarea placeholder="Additional detail"></textarea></td>
+                
+            </tr>
+        </table>
+        
+        </center>
+    </div>
+    <center>
+        <button id="button" style="cursor: pointer; background:lightblue; width:70%; border: 0px; padding: 8px;">Add  + </button>
+    </center>
+    <br><br><br>
+    </section>
+    <hr>
+        <br><br>
+    <center>
+        <button onclick="generatePDF()" style="border: 0px; background:green; border-radius: 20px; cursor: pointer; color: whitesmoke; padding: 10px; width: 78%;"> Download</button>
+        
+        <br>
+    </center>
+    <br><br><hr>
+    
+    <br>
+</body>
+</html>
+<script>
+        var button = document.getElementById("button");
+        var template = document.getElementById("template");
+        var image = document.getElementById("image");
+
+        button.addEventListener("click" , ()=>{
+            datas.innerHTML = datas.innerHTML + `<tr>
+                
+            <td><input type="text" placeholder="Item description"></td><br>
+            <td><input type="number" placeholder="0.00"></td><br>
+            <td><input type="number" placeholder="1"></td><br>
+            <td><input type="number" placeholder="Pkr 100"></td><br>
+            <td><input type="checkbox"><br>
+        </tr>
+        <tr>
+            <td><textarea placeholder="Additional Detail"></textarea></td><br>
+        </tr>`
+        })
+
+            function makeid(length) {
+        var result           = '';
+        var characters       = '0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+
+    console.log(makeid(5));
+    document.getElementById('number').innerText = 'Invoice Number # ' + makeid(5);
+
+    function generatePDF() {
+        
+        // Choose the element id which you want to export.
+        var element = document.getElementById('divToExport');
+        element.style.width = '100%';
+        element.style.height = '100%';
+        var opt = {
+            margin:       0.5,
+            filename:     'invoice-catalystt.pdf',
+            image:        { type: 'jpeg', quality: 1 },
+            html2canvas:  { scale: 1 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape',precision: '12' }
+          };
+        
+        // choose the element and pass it to html2pdf() function and call the save() on it to save as pdf.
+        html2pdf().set(opt).from(element).save();
+      }
+
+</script>
